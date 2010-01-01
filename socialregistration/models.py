@@ -2,62 +2,58 @@
 Created on 22.09.2009
 
 @author: alen
-"""
 
-from django.db import models
+Modified on 01.01.2010
+
+@author: nasim
+"""
 
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
-from django.contrib.sites.models import Site
-# Create your models here.
 
+from google.appengine.ext import db
 
-class FacebookProfile(models.Model):
-    user = models.ForeignKey(User)
-    site = models.ForeignKey(Site, default=Site.objects.get_current)
-    uid = models.CharField(max_length=255, blank=False, null=False)
-    
+class FacebookProfile(db.Model):
+    user = db.ReferenceProperty(User)
+    uid = db.StringProperty()
+
     def __unicode__(self):
         return '%s: %s' % (self.user, self.uid)
-    
+
     def authenticate(self):
         return authenticate(uid=self.uid)
 
-class TwitterProfile(models.Model):
-    user = models.ForeignKey(User)
-    site = models.ForeignKey(Site, default=Site.objects.get_current)
-    twitter_id = models.PositiveIntegerField()
-    
+class TwitterProfile(db.Model):
+    user = db.ReferenceProperty(User)
+    twitter_id = db.IntegerProperty()
+
     def __unicode__(self):
         return '%s: %s' % (self.user, self.twitter_id)
-    
+
     def authenticate(self):
         return authenticate(twitter_id=self.twitter_id)
 
-class FriendFeedProfile(models.Model):
-    user = models.ForeignKey(User)
-    site = models.ForeignKey(Site, default=Site.objects.get_current)
+class FriendFeedProfile(db.Model):
+    user = db.ReferenceProperty(User)
 
-class OpenIDProfile(models.Model):
-    user = models.ForeignKey(User)
-    site = models.ForeignKey(Site, default=Site.objects.get_current)
-    identity = models.TextField()
-    
+class OpenIDProfile(db.Model):
+    user = db.ReferenceProperty(User)
+    identity = db.TextProperty()
+
     def authenticate(self):
         return authenticate(identity=self.identity)
 
-class OpenIDStore(models.Model):
-    site = models.ForeignKey(Site, default=Site.objects.get_current)
-    server_url = models.CharField(max_length=255)
-    handle = models.CharField(max_length=255)
-    secret = models.TextField()
-    issued = models.IntegerField()
-    lifetime = models.IntegerField()
-    assoc_type = models.TextField()
+class OpenIDStore(db.Model):
+    server_url = db.StringProperty()
+    handle = db.StringProperty()
+    secret = db.TextProperty()
+    issued = db.IntegerProperty()
+    lifetime = db.IntegerProperty()
+    assoc_type = db.TextProperty()
 
-class OpenIDNonce(models.Model):
-    server_url = models.CharField(max_length=255)
-    timestamp = models.IntegerField()
-    salt = models.CharField(max_length=255)
-    date_created = models.DateTimeField(auto_now_add=True)
-    
+class OpenIDNonce(db.Model):
+    server_url = db.StringProperty()
+    timestamp = db.IntegerProperty()
+    salt = db.StringProperty()
+    date_created = db.DateTimeProperty()
+

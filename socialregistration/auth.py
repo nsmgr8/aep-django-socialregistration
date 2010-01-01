@@ -10,37 +10,16 @@ from socialregistration.models import (FacebookProfile, TwitterProfile, FriendFe
 
 class Auth(object):
     def get_user(self, user_id):
-        try:
-            return User.objects.get(pk=user_id)
-        except User.DoesNotExist:
-            return None
+        return User.get(user_id)
 
 class FacebookAuth(Auth):
     def authenticate(self, uid=None):
-        try:
-            return FacebookProfile.objects.get(
-                uid=uid,
-                site=Site.objects.get_current()
-            ).user
-        except:
-            return None
+        return FacebookProfile.all().filter('uid =', uid).get()
 
 class TwitterAuth(Auth):
     def authenticate(self, twitter_id=None):
-        try:
-            return TwitterProfile.objects.get(
-                twitter_id=twitter_id,
-                site=Site.objects.get_current()
-            ).user
-        except:
-            return None
+        return TwitterProfile.all().filter('twitter_id =', twitter_id).get()
 
 class OpenIDAuth(Auth):
     def authenticate(self, identity=None):
-        try:
-            return OpenIDProfile.objects.get(
-                identity=identity,
-                site=Site.objects.get_current()
-            ).user
-        except:
-            return None
+        return OpenIDProfile.all().filter('identity =', identity).get()
