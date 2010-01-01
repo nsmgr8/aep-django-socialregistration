@@ -5,12 +5,15 @@ Django Social Registration
 Django Social Registration enables developers to add alternative registration
 methods based on third party sites.
 
+This version is modified for appengine.
+
 Requirements
 ============
 django
 oauth
 python-openid
 pyfacebook
+appengine-patch
 
 Installation
 ============
@@ -24,36 +27,36 @@ Configuration
 
 Facebook Connect
 ----------------
-#. Add *FACEBOOK_API_KEY* and *FACEBOOK_SECRET_KEY* to your settings file 
+#. Add *FACEBOOK_API_KEY* and *FACEBOOK_SECRET_KEY* to your settings file
 representing the keys you were given by Facebook.
 #. Add *socialregistration.auth.FacebookAuth* to *AUTHENTICATION_BACKENDS* in your settings file.
 
 #. Add tags to your template file:
 
-	{% load facebook_tags %} 
- 	{% facebook_button %}
- 	{% facebook_js %}
- 
+  {% load facebook_tags %}
+  {% facebook_button %}
+  {% facebook_js %}
+
 Twitter
 -------
-#. Add the following variables to your *settings.py* file with the values you 
+#. Add the following variables to your *settings.py* file with the values you
 were given by Twitter:
 
-	TWITTER_CONSUMER_KEY
-	TWITTER_CONSUMER_SECRET_KEY
-	TWITTER_REQUEST_TOKEN_URL
-	TWITTER_ACCESS_TOKEN_URL
-	TWITTER_AUTHORIZATION_URL
+  TWITTER_CONSUMER_KEY
+  TWITTER_CONSUMER_SECRET_KEY
+  TWITTER_REQUEST_TOKEN_URL
+  TWITTER_ACCESS_TOKEN_URL
+  TWITTER_AUTHORIZATION_URL
 
 #. Add *socialregistration.auth.TwitterAuth* to *AUTHENTICATION_BACKENDS* in your settings file.
 
 #. Add tags to your template file:
-	{% load twitter_tags %}
-	{% twitter_button %}
+  {% load twitter_tags %}
+  {% twitter_button %}
 
 Other OAuth Services
 --------------------
-There is an example of how FriendFeed integration could work. 
+There is an example of how FriendFeed integration could work.
 *socialregistration.models* provides a *FriendFeedProfile* model to save account
 data, *socialregistration.auth* provides examples for different auth backends for
 different service providers, *socialregistration.utils* provides a Twitter
@@ -64,5 +67,5 @@ OpenID
 ------
 #. Add *socialregistration.auth.OpenIDAuth* to *AUTHENTICATION_BACKENDS* in your settings file.
 #. Add tags to your template file:
-	{% load openid_tags %}
-	{% openid_form %}
+  {% load openid_tags %}
+  {% openid_form %}

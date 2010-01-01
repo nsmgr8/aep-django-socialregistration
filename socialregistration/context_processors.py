@@ -17,11 +17,11 @@ def auth(request):
                 profile = TwitterProfile.objects.get(user=request.user)
             except TwitterProfile.DoesNotExist:
                 logout(request)
-        
+
     return {
         'request': request,
         'profile': profile,
-        'avatar': get_avatar(request, profile)
+        # 'avatar': get_avatar(request, profile)
         }
 
 def get_avatar(request, profile):
@@ -34,7 +34,7 @@ def get_avatar(request, profile):
             settings.TWITTER_CONSUMER_SECRET_KEY,
             settings.TWITTER_REQUEST_TOKEN_URL,
             )
-    
+
         user_info = client.get_user_info()
         avatar_url = user_info['profile_image_url']
 
